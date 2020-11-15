@@ -24,32 +24,34 @@ public class Life implements ILife {
 
 
   @Override
-  public void nukeAll() {
-    // TODO Auto-generated method stub
+  public void nukeAll() { 
+    // set all dead = 0
 
   }
 
   @Override
   public void setAlive(int x, int y) {
-    // TODO Auto-generated method stub
+    // x,y Array = 1
 
   }
 
   @Override
   public void setDead(int x, int y) {
-    // TODO Auto-generated method stub
+    // x,y = 0
 
   }
 
   @Override
   public boolean isAlive(int x, int y) {
-    // TODO Auto-generated method stub
+    // if x,y = 1 -> return true
     return false;
   }
 
   @Override
   public ILife nextGeneration() {
-    // TODO Auto-generated method stub
+    //geht Testfälle durch mit aliveNeighbours 
+    //int count = 0;
+    //count += isAlive(x-1,y-1); usw. -> Nachbarfelder
     return null;
   }
 }
