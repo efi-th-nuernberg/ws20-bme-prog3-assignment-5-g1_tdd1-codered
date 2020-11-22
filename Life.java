@@ -1,4 +1,3 @@
-
 public class Life implements ILife {
 
   public int[][] board;
