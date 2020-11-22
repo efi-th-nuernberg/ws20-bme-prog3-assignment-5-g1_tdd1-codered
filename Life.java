@@ -2,10 +2,13 @@
 public class Life implements ILife {
 
   public int[][] board;
+  public int dim_x;
+  public int dim_y;
 
   public static void main(String[] args) {
 
-    Life l = new Life(new String[] { "     ", "     ", " *** ", "     ", "     " });
+    Life l = new Life(new String[] { "     ", "     ", " *** ", "     " });
+
     l = (Life) l.nextGeneration();
 
   }
@@ -15,11 +18,19 @@ public class Life implements ILife {
     nukeAll();
   }
 
+  public int getDim_x() {
+    return dim_x;
+  }
+
+  public int getDim_y() {
+    return dim_y;
+  }
+
   public Life(String[] setup) {
     this(setup[0].length(), setup.length);
 
-    for (int y = 0; y < board.dim_y; y++)
-      for (int x = 0; x < board.dim_x; x++)
+    for (int y = 0; y < getDim_y(); y++)
+      for (int x = 0; x < getDim_x(); x++)
         if (setup[y].charAt(x) == '*')
           setAlive(x, y);
 
@@ -27,30 +38,27 @@ public class Life implements ILife {
 
   @Override
   public void nukeAll() {
-    // set all dead = 0
-    for (int x = 0; x < board.length; x++)
-      for (int y = 0; y < board.length; y++)
+
+    for (int x = 0; x < getDim_x(); x++)
+      for (int y = 0; y < getDim_y(); y++)
         board[x][y] = 0;
 
   }
 
   @Override
   public void setAlive(int x, int y) {
-    // x,y Array = 1
     board[x][y] = 1;
 
   }
 
   @Override
   public void setDead(int x, int y) {
-    // x,y = 0
     board[x][y] = 0;
 
   }
 
   @Override
   public boolean isAlive(int x, int y) {
-    // if x,y = 1 -> return true
     if (board[x][y] == 1)
       return true;
     else
@@ -60,34 +68,28 @@ public class Life implements ILife {
   @Override
   public ILife nextGeneration() {
     ILife newGeneration = new Life(getDim_x(), getDim_y());
-    for (int x = 0; x < temp.length; x++) {
-      for (int y = 0; y < temp.length; y++) {
+    for (int x = 0; x < getDim_x(); x++) {
+      for (int y = 0; y < getDim_y(); y++) {
 
-        // destroyLonelyCell
+        // destroyLonelyCell & destroyCrowdedCell
         if (isAlive(x, y) == true && (aliveNeighbours(x, y) < 2 || aliveNeighbours(x, y) > 3))
-          //board[x][y] = 0;
-          newGeneration.setAlive(x,y);
+          // board[x][y] = 0;
+          newGeneration.setDead(x, y);
 
         // createNewCell
         if (isAlive(x, y) == false && (aliveNeighbours(x, y) == 3))
-          //board[x][y] = 1;
-          newGeneration.setAlive(x,y);
-
-        // else if (checkAlive(x,y) == true && (CellCount(x,y) < 2 || CellCount(x,y) >
-        // 3)){
-        // tempBoard[x][y] = 0;
+          // board[x][y] = 1;
+          newGeneration.setAlive(x, y);
 
         // keepAliveCell
         if (isAlive(x, y) == true && (aliveNeighbours(x, y) == 2 || aliveNeighbours(x, y) == 3))
-          //board[x][y] = 1;
-          newGeneration.setAlive(x,y);
+          // board[x][y] = 1;
+          newGeneration.setAlive(x, y);
 
       }
     }
 
-    board = temp;
-
-    return this;
+    return newGeneration;
 
   }
 
