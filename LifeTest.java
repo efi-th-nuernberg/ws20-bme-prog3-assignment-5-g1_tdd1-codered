@@ -127,5 +127,4 @@ public class LifeTest {
       System.out.println("\n");
     }
   }
-
 }

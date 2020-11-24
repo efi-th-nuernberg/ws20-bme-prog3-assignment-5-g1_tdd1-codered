@@ -1,4 +1,3 @@
-
 public class Life implements ILife {
 
   public int[][] board;
@@ -15,6 +14,8 @@ public class Life implements ILife {
 
   public Life(int dim_x, int dim_y) {
     this.board = new int[dim_x][dim_y];
+    this.dim_x = dim_x;
+    this.dim_y = dim_y;
     nukeAll();
   }
 
@@ -38,7 +39,6 @@ public class Life implements ILife {
 
   @Override
   public void nukeAll() {
-
     for (int x = 0; x < getDim_x(); x++)
       for (int y = 0; y < getDim_y(); y++)
         board[x][y] = 0;
@@ -73,19 +73,15 @@ public class Life implements ILife {
 
         // destroyLonelyCell & destroyCrowdedCell
         if (isAlive(x, y) == true && (aliveNeighbours(x, y) < 2 || aliveNeighbours(x, y) > 3))
-          // board[x][y] = 0;
           newGeneration.setDead(x, y);
 
         // createNewCell
         if (isAlive(x, y) == false && (aliveNeighbours(x, y) == 3))
-          // board[x][y] = 1;
           newGeneration.setAlive(x, y);
 
         // keepAliveCell
         if (isAlive(x, y) == true && (aliveNeighbours(x, y) == 2 || aliveNeighbours(x, y) == 3))
-          // board[x][y] = 1;
           newGeneration.setAlive(x, y);
-
       }
     }
 
@@ -93,24 +89,26 @@ public class Life implements ILife {
 
   }
 
-  public int aliveNeighbours(int i, int j) {
+  public int aliveNeighbours(int x, int y) {
     int counter = 0;
-    if (isAlive(i - 1, j - 1))
+    if (x - 1 >= 0 && y - 1 >= 0 && isAlive(x - 1, y - 1))
       counter++;
-    if (isAlive(i - 1, j))
+    if (x - 1 >= 0 && isAlive(x - 1, y))
       counter++;
-    if (isAlive(i - 1, j + 1))
+    if (x - 1 >= 0 && y + 1 < getDim_y() && isAlive(x - 1, y + 1))
       counter++;
-    if (isAlive(i, j - 1))
+    if (y - 1 >= 0 && isAlive(x, y - 1))
       counter++;
-    if (isAlive(i, j + 1))
+    if (y + 1 < getDim_y() && isAlive(x, y + 1))
       counter++;
-    if (isAlive(i + 1, j - 1))
+    if (x + 1 < getDim_x() && y - 1 >= 0 && isAlive(x + 1, y - 1))
       counter++;
-    if (isAlive(i + 1, j))
+    if (x + 1 < getDim_x() && isAlive(x + 1, y))
       counter++;
-    if (isAlive(i + 1, j + 1))
+    if (x + 1 < getDim_x() && y + 1 < getDim_y() && isAlive(x + 1, y + 1))
       counter++;
+
     return counter;
+
   }
 }
