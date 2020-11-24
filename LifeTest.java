@@ -113,10 +113,10 @@ public class LifeTest {
 
   public void printLife(Life l) {
     String gen = "";
-    for (int y = 0; y < 4; y++) // l.dim_y;
+    for (int y = 0; y < 4; y++) 
     {
       System.out.print(" Zeile" + y + " || ");
-      for (int x = 0; x < 4; x++) // l.dim_x;
+      for (int x = 0; x < 4; x++) 
       {
         if (l.isAlive(x, y))
           gen = "X";
